@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+routes:
+  - path: "/api/serviceA/*"
+    upstream: "http://localhost:9001"
+    rateLimit:
+      enabled: true
+      capacity: 10
+      refillTokens: 5
+      refillPeriodSeconds: 1
+    circuitBreaker:
+      enabled: true
+      failureThreshold: 0.5
+      windowSizeSeconds: 10
+      halfOpenTestRequests: 2
+      recoveryTimeoutSeconds: 30
+
+  - path: "/api/serviceB/*"
+    upstream: "http://localhost:9002"
+    rateLimit:
+      enabled: false
